@@ -1,0 +1,22 @@
+.input {
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 4px 10px;
+  outline: none;
+  min-width: 250px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.label {
+  margin-bottom: 2px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
