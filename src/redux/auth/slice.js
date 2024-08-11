@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './contactsOperations';
+import { fetchContacts, addContact, deleteContact } from './operations';
 import { logOut } from '../auth/operations';
 
 const contactsSlice = createSlice({
@@ -48,11 +48,12 @@ const contactsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.items = []; // Очищаємо контакти при виході
+        state.items = []; 
         state.error = null;
         state.isLoading = false;
       });
   },
 });
 
-export default contactsSlice.reducer;
+export default authSlice.reducer;
+
