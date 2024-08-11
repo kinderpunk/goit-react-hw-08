@@ -12,7 +12,8 @@ export const fetchContacts = createAsyncThunk(
       const { data } = await contactsApi.get('/contacts');
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.error('Fetch contacts error:', error); 
+      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
@@ -24,7 +25,8 @@ export const addContact = createAsyncThunk(
       const { data } = await contactsApi.post('/contacts', contact);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.error('Add contact error:', error); 
+      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
@@ -36,7 +38,8 @@ export const deleteContact = createAsyncThunk(
       const { data } = await contactsApi.delete(`/contacts/${contactId}`);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.error('Delete contact error:', error);
+      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
