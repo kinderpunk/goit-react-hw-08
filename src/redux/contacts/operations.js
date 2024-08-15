@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const contactsApi = axios.create({
-  baseURL: 'https://connections-api.goit.global/'
-});
+const handleError = (error) => {
+  console.error(error);
+  return error.response ? error.response.data : error.message;
+};
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
     try {
-      const { data } = await contactsApi.get('/contacts');
+      const { data } = await axios.get('https://connections-api.goit.global/contacts');
       return data;
     } catch (error) {
-      console.error('Fetch contacts error:', error); 
-      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
+      return thunkAPI.rejectWithValue(handleError(error));
     }
   }
 );
@@ -22,11 +22,10 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await contactsApi.post('/contacts', contact);
+      const { data } = await axios.post('https://connections-api.goit.global/contacts', contact);
       return data;
     } catch (error) {
-      console.error('Add contact error:', error); 
-      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
+      return thunkAPI.rejectWithValue(handleError(error));
     }
   }
 );
@@ -35,11 +34,10 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkAPI) => {
     try {
-      const { data } = await contactsApi.delete(`/contacts/${contactId}`);
-      return data;
+      await axios.delete(`https://connections-api.goit.global/contacts/${contactId}`);
+      return contactId;
     } catch (error) {
-      console.error('Delete contact error:', error);
-      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
+      return thunkAPI.rejectWithValue(handleError(error));
     }
   }
 );
